@@ -5,4 +5,5 @@ export class Itenary {
     departureDate: string;
     destinations: Destination[];
     primaryAccountNumbers: Account[] = [];
+    travelItineraryId: string;
 }

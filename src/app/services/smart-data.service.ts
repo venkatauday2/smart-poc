@@ -1,3 +1,9 @@
+import { Observable } from 'rxjs/Rx';
+import { UpdateItenaryApiModel } from '../apiModels/updateItineraryApiModel';
+import { DestinationApiModel } from '../apiModels/destinationApiModel';
+import { AccountApiModel } from '../apiModels/accountApiModel';
+import { ItineraryApiModel } from '../apiModels/itineraryApiModel';
+import { AddItenaryApiModel } from '../apiModels/addItenaryApiModel';
 import { Account } from '../models/account';
 import { Destination } from '../models/destination';
 import { Itenary } from '../models/itenary';
@@ -38,9 +44,8 @@ export class SmartDataService {
     itenaryModel.departureDate = itenary.departureDate;
     itenaryModel.destinations = [new Destination(itenary.state, itenary.country)];
     itenaryModel.primaryAccountNumbers = [];
-   
-    for(let cardNumber of itenary.cardNumbers)
-    {
+
+    for (let cardNumber of itenary.cardNumbers) {
       itenaryModel.primaryAccountNumbers.push(new Account(cardNumber.toString(), false, false));
     }
 
@@ -48,7 +53,46 @@ export class SmartDataService {
   }
 
 
-  private newFunction(cardNumber: any): Account {
-    return new Account(cardNumber, false, false);
+  public addItinerary(itinerary: any): Observable<any> {
+    return this.smartApiService.addItinerary(this.buildAddItineraryApiModel(itinerary));
   }
+
+  public updateItinerary(travelItineraryId: string, itinerary: any): Observable<any> {
+    return this.smartApiService.updateItinerary(this.buildUpdateItineraryApiModel(travelItineraryId, itinerary));
+  }
+
+  private buildAddItineraryApiModel(itinerary: any): AddItenaryApiModel {
+    let addItineraryApiModel = new AddItenaryApiModel();
+    addItineraryApiModel.userId = this.user.userId
+    addItineraryApiModel.partnerBid = this.user.partnerBid
+    addItineraryApiModel.addTravelItinerary = this.buildItineraryApiModel(itinerary)
+    return addItineraryApiModel;
+  }
+
+
+  private buildUpdateItineraryApiModel(travelItineraryId: string, itinerary: any): UpdateItenaryApiModel {
+    let updateItineraryApiModel = new UpdateItenaryApiModel();
+    updateItineraryApiModel.userId = this.user.userId
+    updateItineraryApiModel.partnerBid = this.user.partnerBid
+    updateItineraryApiModel.updateTravelItinerary = this.buildItineraryApiModel(itinerary);
+    updateItineraryApiModel.travelItineraryId = travelItineraryId;
+    return updateItineraryApiModel;
+  }
+
+
+  private buildItineraryApiModel(itinerary: any): ItineraryApiModel {
+    let itineraryApiModel = new ItineraryApiModel();
+    itineraryApiModel.departureDate = itinerary.departureDate;
+    itineraryApiModel.returnDate = itinerary.returnDate;
+    itineraryApiModel.primaryAccountNumbers = [];
+
+    for (let cardNumber of itinerary.cardNumbers) {
+      let account = new AccountApiModel();
+      account.cardAccountNumber = cardNumber;
+      itineraryApiModel.primaryAccountNumbers.push(account);
+    }
+    itineraryApiModel.destinations = [new DestinationApiModel(itinerary.state, itinerary.country)];
+    return itineraryApiModel;
+  }
+
 }
