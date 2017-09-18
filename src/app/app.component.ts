@@ -1,3 +1,5 @@
+import { SmartApiService } from './services/smart-api.service';
+import { SmartDataService } from './services/smart-data.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+ 
+  constructor(private smartDataService:SmartDataService) {
+        this.smartDataService.loadUser();
+  }
 }

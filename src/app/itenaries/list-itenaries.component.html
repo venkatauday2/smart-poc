@@ -1,0 +1,58 @@
+<br/>
+<br/>
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-9">
+                <legend>
+                  <h4>My Itenaries</h4>
+                </legend>
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-md btn-primary" (click)="showForm()"> Add Itenary</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <itenary-form *ngIf="shouldShowItenaryForm" (eventShowItenaryForm)=showForm($event)></itenary-form>
+              </div>
+            </div>
+            <div class="row" *ngIf="!shouldShowItenaryForm && smartDataService.user">
+              <div class="col-md-12">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th colspan="3">Account Numbers</th>
+                      <th>Destination</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itenary of smartDataService.user.itenaries">
+                      <td>{{itenary.departureDate}}</td>
+                      <td>{{itenary.returnDate}}</td>
+                      <td colspan="3"><span *ngFor=" let item of itenary.primaryAccountNumbers, let i=index">
+                          {{item.cardAccountNumber}}{{i === itenary.primaryAccountNumbers.length - 1 ? '' : ', '}}
+                       </span></td>
+                      <td>{{itenary.destinations[0].state}}, {{itenary.destinations[0].country}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1">
+
+  </div>
+</div>
