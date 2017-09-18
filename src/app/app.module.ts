@@ -3,7 +3,9 @@ import { SmartApiService } from './services/smart-api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { TabsModule } from 'ngx-bootstrap'
+import { HttpModule } from '@angular/http';
+import { TabsModule } from 'ngx-bootstrap';
+import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 
 //import components
 import { AppComponent } from './app.component';
@@ -25,9 +27,10 @@ import { AccountComponent } from './manageAccounts/account/account.component'
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     ReactiveFormsModule,
-    TabsModule.forRoot()
-    //DropdownMultiselectModule
+    TabsModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   providers: [
     SmartApiService,

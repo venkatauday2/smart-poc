@@ -1,5 +1,5 @@
-import { UpdateItenaryApiModel } from '../postApiModels/updateItineraryApiModel';
-import { AddItenaryApiModel } from '../postApiModels/addItenaryApiModel';
+import { UpdateItenaryApiModel } from '../apiModels/updateItineraryApiModel';
+import { AddItenaryApiModel } from '../apiModels/addItenaryApiModel';
 import { CURRENT_USER, User } from '../models/user';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment'
