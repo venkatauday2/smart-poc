@@ -33,6 +33,10 @@ export class ListItenariesComponent implements OnInit {
   public editItinenary(itinenary: any) {
     this.selectedItinenary = itinenary;
     this.shouldShowItenaryForm = true;
+  }
+
+  public onDelete(itinerary: any) {
+    this.smartDataService.deleteItinenary(itinerary);
 
   }
 

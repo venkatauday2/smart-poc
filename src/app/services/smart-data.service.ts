@@ -79,6 +79,21 @@ export class SmartDataService {
   }
 
 
+  public deleteItinenary(deleteItinenary: any) {
+
+
+    let index = 0;
+    for (let itinenary of this.user.itenaries) {
+
+      if (itinenary.travelItineraryId === deleteItinenary.travelItineraryId) {
+        this.user.itenaries.splice(index, 1)
+      }
+      index += 1;
+    }
+
+  }
+
+
   public addItinerary(itinerary: any): Observable<any> {
     return this.smartApiService.addItinerary(this.buildAddItineraryApiModel(itinerary));
   }
