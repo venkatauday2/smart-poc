@@ -12,8 +12,9 @@
         </tab>
         <tab>
           <ng-template tabHeading>
-            <h5><span class="fa fa-credit-card"></span> Manage Cards</h5>
+            <h5><span class="fa fa-credit-card"></span> Manage Cards</h5>    
           </ng-template>
+          <app-list-accounts *ngIf = "smartDataService.user"></app-list-accounts>
         </tab>
       </tabset>
     </div>

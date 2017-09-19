@@ -1,3 +1,9 @@
-<p>
-  list-accounts works!
-</p>
+<br/>
+<br/>
+<div class="row">
+  <div class="col-md-3" *ngFor="let account of accounts ; let i = index">
+
+    <app-account [account]="account" [cardName]="i+1"></app-account>
+
+  </div>
+</div>

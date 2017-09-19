@@ -1,4 +1,6 @@
+import { SmartDataService } from '../../services/smart-data.service';
 import { Component, OnInit } from '@angular/core';
+import { Account } from '../../models/account'
 
 @Component({
   selector: 'app-list-accounts',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListAccountsComponent implements OnInit {
 
-  constructor() { }
+  public accounts: Account[] = [];
+
+  constructor(private smartDataService: SmartDataService) {
+
+    this.accounts = this.smartDataService.user.accountNumbers;
+
+  }
 
   ngOnInit() {
   }

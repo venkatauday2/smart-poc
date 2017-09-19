@@ -9,6 +9,7 @@ import { Account } from '../../models/account';
 export class AccountComponent implements OnInit {
 
   @Input() account:Account;
+  @Input() cardName:number;
 
   constructor() { }
 
