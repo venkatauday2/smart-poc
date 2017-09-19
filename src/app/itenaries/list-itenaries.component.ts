@@ -1,3 +1,4 @@
+import { Itenary } from '../models/itenary';
 import { SmartDataService } from '../services/smart-data.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class ListItenariesComponent implements OnInit {
 
   public shouldShowItenaryForm: boolean = false;
+  public selectedItinenary: Itenary;
 
   constructor(private smartDataService: SmartDataService) {
 
@@ -19,8 +21,19 @@ export class ListItenariesComponent implements OnInit {
   }
 
 
+  public addItinenary() {
+    this.selectedItinenary = new Itenary();
+    this.shouldShowItenaryForm = true;
+  }
+
   public showForm() {
-    this.shouldShowItenaryForm = !this.shouldShowItenaryForm;
+    this.shouldShowItenaryForm = false;
+  }
+
+  public editItinenary(itinenary: any) {
+    this.selectedItinenary = itinenary;
+    this.shouldShowItenaryForm = true;
+
   }
 
 }

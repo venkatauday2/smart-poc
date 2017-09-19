@@ -12,17 +12,17 @@
               <div class="row">
                 <div class="col-md-9">
                   <legend>
-                    <h4><span class="fa fa-plane"></span> My Itenaries</h4>
+                    <h4><span class="fa fa-plane"></span> My Itinenaries</h4>
                   </legend>
                 </div>
                 <div class="col-md-3">
-                  <button type="button" class="btn btn-md btn-primary" (click)="showForm()"> Add Itenary</button>
+                  <button type="button" class="btn btn-md btn-primary" (click)="addItinenary()"> <span class="fa fa-plus"></span> Add Itinenary</button>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <itenary-form *ngIf="shouldShowItenaryForm" (eventShowItenaryForm)=showForm($event)></itenary-form>
+                <itenary-form *ngIf="shouldShowItenaryForm" (eventShowItenaryForm)=showForm($event) [itinenary]="selectedItinenary"></itenary-form>
               </div>
             </div>
             <div class="row" *ngIf="!shouldShowItenaryForm && smartDataService.user">
@@ -44,6 +44,12 @@
                           {{item.cardAccountNumber}}{{i === itenary.primaryAccountNumbers.length - 1 ? '' : ', '}}
                        </span></td>
                       <td>{{itenary.destinations[0].state}}, {{itenary.destinations[0].country}}</td>
+                      <td>
+                        <div>
+                          <button class="btn btn-sm btn-primary" (click)="editItinenary(itenary)"><span class="fa fa-pencil"></span></button>
+                          <button class="btn btn-sm btn-danger" (click)="onDelete(itenary)"><span class="fa fa-trash"></span></button>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

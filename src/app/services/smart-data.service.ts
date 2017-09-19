@@ -44,12 +44,38 @@ export class SmartDataService {
     itenaryModel.departureDate = itenary.departureDate;
     itenaryModel.destinations = [new Destination(itenary.state, itenary.country)];
     itenaryModel.primaryAccountNumbers = [];
+    itenaryModel.travelItineraryId = itenary.travelItineraryId;
 
-    for (let cardNumber of itenary.cardNumbers) {
+    for (let cardNumber of itenary.selectedCardNumbers) {
       itenaryModel.primaryAccountNumbers.push(new Account(cardNumber.toString(), false, false));
     }
 
     this.user.itenaries.push(itenaryModel);
+  }
+
+
+  public updateUserItenary(itenary: any) {
+
+    var itenaryModel = this.findItineraryById(itenary.travelItineraryId);
+    itenaryModel.returnDate = itenary.returnDate;
+    itenaryModel.departureDate = itenary.departureDate;
+    itenaryModel.destinations = [new Destination(itenary.state, itenary.country)];
+    itenaryModel.primaryAccountNumbers = [];
+    itenaryModel.travelItineraryId = itenary.travelItineraryId;
+
+    for (let cardNumber of itenary.selectedCardNumbers) {
+      itenaryModel.primaryAccountNumbers.push(new Account(cardNumber.toString(), false, false));
+    }
+  }
+
+  private findItineraryById(id: string): Itenary {
+
+    for (let itinenary of this.user.itenaries) {
+      if (itinenary.travelItineraryId === id)
+        return itinenary;
+    }
+    return null;
+
   }
 
 
