@@ -81,7 +81,6 @@ export class SmartDataService {
 
   public deleteItinenary(deleteItinenary: any) {
 
-
     let index = 0;
     for (let itinenary of this.user.itenaries) {
 
