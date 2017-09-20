@@ -33,8 +33,6 @@ export class ItenaryFormComponent implements OnInit {
 
         if (this.itinenary.travelItineraryId == "0" || !this.itinenary.travelItineraryId) {
             this.inEditMode = false;
-            this.itinenary = new Itenary();
-            this.itinenary.travelItineraryId = (Math.floor(Math.random() * 1000000) + 1).toString()
         }
         else {
             this.inEditMode = true;
@@ -49,8 +47,16 @@ export class ItenaryFormComponent implements OnInit {
     onInitForm() {
 
         let destinations = new FormArray([], Validators.compose([Validators.required, Validators.minLength(1)]));
+        let travelItineraryId = null;
+        let departureDate = null;
+        let returnDate = null;
+        let selectedCardNumbers = this.selectedCardNumbers;
 
         if (this.inEditMode) {
+            travelItineraryId = this.itinenary.travelItineraryId;
+            departureDate = this.itinenary.departureDate;
+            returnDate = this.itinenary.returnDate;
+
             if (this.itinenary.destinations.length > 0) {
                 for (let destination of this.itinenary.destinations) {
                     destinations.push(new FormGroup({
@@ -60,13 +66,16 @@ export class ItenaryFormComponent implements OnInit {
                 }
             }
         }
+        else {
+            travelItineraryId = (Math.floor(Math.random() * 1000000) + 1).toString()
+        }
 
         this.itenaryForm = new FormGroup({
-            'travelItineraryId': new FormControl('', []),
-            'departureDate': new FormControl('', [Validators.required]),
-            'returnDate': new FormControl('', [Validators.required]),
+            'travelItineraryId': new FormControl(travelItineraryId, []),
+            'departureDate': new FormControl(departureDate, [Validators.required]),
+            'returnDate': new FormControl(returnDate, [Validators.required]),
             'destinations': destinations,
-            'selectedCardNumbers': new FormControl('', [Validators.required])
+            'selectedCardNumbers': new FormControl(selectedCardNumbers, [Validators.required])
         });
 
     }

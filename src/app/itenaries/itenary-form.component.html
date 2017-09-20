@@ -3,7 +3,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
       <div class="form-group">
-        <input type="hidden" class="form-control" id="travelItineraryId" formControlName="travelItineraryId" [(ngModel)]="itinenary.travelItineraryId">
+        <input type="hidden" class="form-control" id="travelItineraryId" formControlName="travelItineraryId">
       </div>
       <fieldset>
         <legend>Travel Dates</legend>
@@ -12,7 +12,7 @@
             <div class="form-group" [ngClass]="{ 'has-success' :itenaryForm.controls['departureDate'].valid,
               'has-error' : itenaryForm.controls['departureDate'].invalid && itenaryForm.controls['departureDate'].touched }">
               <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" id="departureDate" placeholder="Departure Date"
-                formControlName="departureDate" [(ngModel)]="itinenary.departureDate">
+                formControlName="departureDate">
               <span id="departureHelpBlock1" class="help-block" *ngIf="itenaryForm.controls['departureDate'].invalid 
                      && itenaryForm.controls['departureDate'].touched
                      && itenaryForm.controls['departureDate'].hasError('required')"> Departure date is required.</span>
@@ -22,7 +22,7 @@
             <div class="form-group" [ngClass]="{ 'has-success' :itenaryForm.controls['returnDate'].valid,
               'has-error' : itenaryForm.controls['returnDate'].invalid && itenaryForm.controls['returnDate'].touched }">
               <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" id="returnDate" placeholder="Return Date"
-                formControlName="returnDate" [(ngModel)]="itinenary.returnDate">
+                formControlName="returnDate">
               <span id="returnHelpBlock1" class="help-block" *ngIf="itenaryForm.controls['returnDate'].invalid 
                     && itenaryForm.controls['returnDate'].touched
                     && itenaryForm.controls['returnDate'].hasError('required')"> Return date is required.</span>
@@ -69,7 +69,8 @@
                 <input type="text" class="form-control" id="country" readonly formControlName="country">
               </div>
               <div class="col-md-2">
-                <button type="button" (click)="onDeleteDestination(i)" style="margin-top:3px;margin-left:-10px" class="btn btn-danger btn-sm" id="delDest"><span class="fa fa-trash"></span></button>
+                <button type="button" (click)="onDeleteDestination(i)" style="margin-top:3px;margin-left:-10px" class="btn btn-danger btn-sm"
+                  id="delDest"><span class="fa fa-trash"></span></button>
               </div>
             </div>
           </div>
