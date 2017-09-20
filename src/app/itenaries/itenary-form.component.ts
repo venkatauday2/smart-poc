@@ -47,8 +47,8 @@ export class ItenaryFormComponent implements OnInit {
 
 
     onInitForm() {
-        
-        let destinations = new FormArray([],Validators.compose([Validators.required,Validators.minLength(1)]));
+
+        let destinations = new FormArray([], Validators.compose([Validators.required, Validators.minLength(1)]));
 
         if (this.inEditMode) {
             if (this.itinenary.destinations.length > 0) {
@@ -85,6 +85,9 @@ export class ItenaryFormComponent implements OnInit {
         }));
     }
 
+    onDeleteDestination(i: any) {
+        (<FormArray>this.itenaryForm.get('destinations')).removeAt(i);
+    }
 
 
     onSubmit() {
