@@ -65,8 +65,15 @@
                                                   &&  destinationCtrl.get('state').touched
                                                   &&  destinationCtrl.get('state').hasError('required')"> State is required.</span>
               </div>
-              <div class="col-md-5 form-group">
-                <input type="text" class="form-control" id="country" readonly formControlName="country">
+              <div class="col-md-5 form-group" [ngClass]="{ 'has-success': destinationCtrl.get('country').valid,
+                                                            'has-error'  : destinationCtrl.get('country').invalid && destinationCtrl.get('country').touched }">
+                <select type="text" class="form-control" id="country" placeholder="Country" formControlName="country">
+                      <option value="">Choose a Country</option>
+                      <option *ngFor="let country of countries"  [ngValue]="country.code">{{country.description}}</option>
+            </select>
+                <span id="countryBlock1" class="help-block" *ngIf="destinationCtrl.get('country').invalid 
+                                                &&  destinationCtrl.get('country').touched
+                                                &&  destinationCtrl.get('country').hasError('required')"> Country is required.</span>
               </div>
               <div class="col-md-2">
                 <button type="button" (click)="onDeleteDestination(i)" style="margin-top:3px;margin-left:-10px" class="btn btn-danger btn-sm"

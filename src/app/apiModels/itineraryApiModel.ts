@@ -1,7 +1,7 @@
 import { DestinationApiModel } from './destinationApiModel';
 import { AccountApiModel } from './accountApiModel';
 
-export class ItineraryApiModel {
+export class ItinenaryApiModel {
     returnDate: string;
     departureDate: string;
     destinations: DestinationApiModel[];

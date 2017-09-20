@@ -1,6 +1,6 @@
-import { ItineraryApiModel } from './itineraryApiModel';
+import { ItinenaryApiModel } from './itineraryApiModel';
 export class AddItenaryApiModel {
     userId: string;
     partnerBid: string;
-    addTravelItinerary: ItineraryApiModel;
+    addTravelItinerary: ItinenaryApiModel;
 }

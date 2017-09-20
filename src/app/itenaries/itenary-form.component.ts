@@ -1,3 +1,4 @@
+import { COUNTRIES, Country } from '../models/country';
 import { Destination } from '../models/destination';
 import { Itenary } from '../models/itenary';
 import { SmartDataService } from '../services/smart-data.service';
@@ -19,12 +20,14 @@ export class ItenaryFormComponent implements OnInit {
     itenaryForm: FormGroup;
 
     private states: State[] = [];
+    private countries: Country[] = [];
     private accountNumbers: Account[] = [];
     private inEditMode: boolean;
     private selectedCardNumbers: string[] = [];
 
 
     constructor(private smartDataService: SmartDataService) {
+        this.countries = COUNTRIES;
         this.states = STATES;
         this.accountNumbers = this.smartDataService.user.accountNumbers;
     }
@@ -90,7 +93,7 @@ export class ItenaryFormComponent implements OnInit {
     onAddDestination() {
         (<FormArray>this.itenaryForm.get('destinations')).push(new FormGroup({
             'state': new FormControl('', [Validators.required]),
-            'country': new FormControl('USA', [Validators.required])
+            'country': new FormControl('', [Validators.required])
         }));
     }
 

@@ -45,7 +45,7 @@
                        </span></td>
                       <td>
                         <span *ngFor=" let destination of itenary.destinations, let j=index">
-                            {{destination.state}}, {{destination.country}}{{j === itenary.destinations.length - 1 ? '' : ' ;  '}}
+                            {{destination.state}}, {{"United States"}}{{j === itenary.destinations.length - 1 ? '' : '&nbsp;&nbsp;'}}
                         </span>
                       </td>
                       <td>
