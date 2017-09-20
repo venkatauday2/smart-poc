@@ -42,7 +42,7 @@ export class SmartDataService {
     var itenaryModel = new Itenary();
     itenaryModel.returnDate = itenary.returnDate;
     itenaryModel.departureDate = itenary.departureDate;
-    itenaryModel.destinations = [new Destination(itenary.state, itenary.country)];
+    itenaryModel.destinations = itenary.destinations
     itenaryModel.primaryAccountNumbers = [];
     itenaryModel.travelItineraryId = itenary.travelItineraryId;
 
@@ -59,7 +59,7 @@ export class SmartDataService {
     var itenaryModel = this.findItineraryById(itenary.travelItineraryId);
     itenaryModel.returnDate = itenary.returnDate;
     itenaryModel.departureDate = itenary.departureDate;
-    itenaryModel.destinations = [new Destination(itenary.state, itenary.country)];
+    itenaryModel.destinations = itenary.destinations
     itenaryModel.primaryAccountNumbers = [];
     itenaryModel.travelItineraryId = itenary.travelItineraryId;
 
