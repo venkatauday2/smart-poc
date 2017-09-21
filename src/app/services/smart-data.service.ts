@@ -3,15 +3,9 @@ import { UIFilter } from '../models/filter';
 import { observable } from 'rxjs/symbol/observable';
 import { DataMapper } from '../mapper/dataMapper';
 import { Observable } from 'rxjs/Rx';
-import { UpdateItenaryApiModel } from '../apiModels/updateItineraryApiModel';
-import { DestinationApiModel } from '../apiModels/destinationApiModel';
-import { AccountApiModel } from '../apiModels/accountApiModel';
-import { ItinenaryApiModel } from '../apiModels/itineraryApiModel';
-import { AddItenaryApiModel } from '../apiModels/addItenaryApiModel';
 import { Account } from '../models/account';
 import { Destination } from '../models/destination';
 import { Itinerary } from '../models/itenary';
-
 import { User } from '../models/user';
 import { SmartApiService } from './smart-api.service';
 import { Injectable } from '@angular/core';
@@ -72,7 +66,6 @@ export class SmartDataService {
   }
 
 
-
   public loadItineraries(): void {
     this.isLoadingItineraries = true;
     this.getItineraries(this.filter).subscribe((response) => {
@@ -87,62 +80,17 @@ export class SmartDataService {
 
 
   public addItinerary(itinenary: any): Observable<any> {
-    return this.smartApiService.addItinerary(this.buildAddItineraryApiModel(itinenary));
+    return this.smartApiService.addItinerary(this.dataMapper.buildAddItineraryApiModel(itinenary, this.user));
   }
+
 
   public updateItinerary(itinenary: any): Observable<any> {
-    return this.smartApiService.updateItinerary(this.buildUpdateItineraryApiModel(itinenary));
-  }
-
-  private buildAddItineraryApiModel(itinenary: any): AddItenaryApiModel {
-    let addItineraryApiModel = new AddItenaryApiModel();
-    addItineraryApiModel.userId = this.user.userId
-    addItineraryApiModel.partnerBid = this.user.partnerBid
-    addItineraryApiModel.addTravelItinerary = this.buildItineraryApiModel(itinenary)
-    return addItineraryApiModel;
-  }
-
-
-  private buildUpdateItineraryApiModel(itinenary: any): UpdateItenaryApiModel {
-    let updateItineraryApiModel = new UpdateItenaryApiModel();
-    updateItineraryApiModel.userId = this.user.userId
-    updateItineraryApiModel.partnerBid = this.user.partnerBid
-    updateItineraryApiModel.updateTravelItinerary = this.buildItineraryApiModel(itinenary);
-    updateItineraryApiModel.travelItineraryId = itinenary.travelItineraryId;
-    return updateItineraryApiModel;
-  }
-
-
-  private buildItineraryApiModel(itinerary: any): ItinenaryApiModel {
-    let itinenaryApiModel = new ItinenaryApiModel();
-    itinenaryApiModel.departureDate = itinerary.departureDate;
-    itinenaryApiModel.returnDate = itinerary.returnDate;
-    itinenaryApiModel.primaryAccountNumbers = [];
-    itinenaryApiModel.destinations = [];
-
-    // add accounts
-    for (let cardNumber of itinerary.selectedCardNumbers) {
-      let account = new AccountApiModel();
-      account.cardAccountNumber = cardNumber;
-      itinenaryApiModel.primaryAccountNumbers.push(account);
-    }
-
-    // add destinations
-    for (let destination of itinerary.destinations) {
-      let destApiModel = new DestinationApiModel(destination.state, destination.country);
-      itinenaryApiModel.destinations.push(destApiModel);
-    }
-
-    return itinenaryApiModel;
+    return this.smartApiService.updateItinerary(this.dataMapper.buildUpdateItineraryApiModel(itinenary, this.user));
   }
 
 
   public deleteItinenary(deleteItinenary: any) {
-    let requestBody = new DeleteItineraryRequest();
-    requestBody.deleteTravelItinerary = {
-      travelItineraryId: deleteItinenary.travelItineraryId
-    }
-    return this.smartApiService.deleteItinerary(requestBody)
+    return this.smartApiService.deleteItinerary(this.dataMapper.buildDeleteItineraryApiRequest(deleteItinenary));
   }
 
 
