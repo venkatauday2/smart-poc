@@ -24,6 +24,7 @@ export class ItenaryFormComponent implements OnInit {
     private accountNumbers: Account[] = [];
     private inEditMode: boolean;
     private isSavingData: boolean = false;
+    private hasErrorOccured: boolean = false;
 
 
     constructor(private smartDataService: SmartDataService) {
@@ -120,7 +121,11 @@ export class ItenaryFormComponent implements OnInit {
                 this.eventShowItenaryForm.emit(false);
             }, (error) => {
                 console.log(error);
-            }, () => { this.isSavingData = false; });
+                this.hasErrorOccured = true;
+                this.isSavingData = false;
+            }, () => {
+                this.isSavingData = false;
+            });
         }
         else {
             this.smartDataService.updateItinerary(formData).subscribe((data: any) => {
@@ -128,7 +133,11 @@ export class ItenaryFormComponent implements OnInit {
                 this.eventShowItenaryForm.emit(false);
             }, (error) => {
                 console.log(error);
-            }, () => { this.isSavingData = false; });
+                this.hasErrorOccured = true;
+                this.isSavingData = false;
+            }, () => {
+                this.isSavingData = false;
+            });
         }
 
     }
