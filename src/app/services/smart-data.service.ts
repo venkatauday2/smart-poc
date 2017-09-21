@@ -25,6 +25,7 @@ export class SmartDataService {
   public isLoadingItineraries: boolean = false;
   public userAccountNumbers: string[] = [];
   public filter: UIFilter;
+  public hasErrorOccuredLoadingItineraries: boolean = false;
 
   constructor(private smartApiService: SmartApiService, private dataMapper: DataMapper) {
     this.filter = new UIFilter();
@@ -77,6 +78,7 @@ export class SmartDataService {
     this.getItineraries(this.filter).subscribe((response) => {
       this.itineraries = response as Itinerary[];
     }, (error) => {
+      this.hasErrorOccuredLoadingItineraries = true;
       console.log(error);
     }, () => {
       this.isLoadingItineraries = false;
