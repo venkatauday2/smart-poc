@@ -32,15 +32,16 @@
       </fieldset>
       <fieldset>
         <legend>Card Numbers</legend>
-        <div class="form-group" [ngClass]="{ 'has-success':itenaryForm.controls['selectedCardNumbers'].valid,
-        'has-error' : itenaryForm.controls['selectedCardNumbers'].invalid && itenaryForm.controls['selectedCardNumbers'].touched }">
+        <div class="form-group" [ngClass]="{ 'has-success':itenaryForm.controls['selectedCardNumber'].valid,
+        'has-error' : itenaryForm.controls['selectedCardNumber'].invalid && itenaryForm.controls['selectedCardNumber'].touched }">
 
-          <select multiple formControlName="selectedCardNumbers" class="form-control" [(ngModel)]="selectedCardNumbers">
+          <select formControlName="selectedCardNumber" class="form-control" style="width:300px">
+                 <option value="">Select a card</option>
                  <option *ngFor="let account of accountNumbers" [value]="account.cardAccountNumber" [selected]= "account.isSelected" >{{account.cardAccountNumber}}</option>
           </select>
-          <span id="returnHelpBlock1" class="help-block" *ngIf="itenaryForm.controls['selectedCardNumbers'].invalid 
-               && itenaryForm.controls['selectedCardNumbers'].touched
-               && itenaryForm.controls['selectedCardNumbers'].hasError('required')"> Atleast one card need to be selected.</span>
+          <span id="returnHelpBlock1" class="help-block" *ngIf="itenaryForm.controls['selectedCardNumber'].invalid 
+               && itenaryForm.controls['selectedCardNumber'].touched
+               && itenaryForm.controls['selectedCardNumber'].hasError('required')"> Card selection is required.</span>
         </div>
       </fieldset>
       <fieldset>
@@ -52,6 +53,7 @@
             <button type="button" class="btn btn-sm btn-default" (click)="onAddDestination()" style="color:green"><span class="fa fa-plus"></span> Add Destination </button>
           </div>
         </div>
+        <br/>
         <div class="row">
           <div class="col-md-12" formArrayName="destinations">
             <div class="row" *ngFor="let destinationCtrl of itenaryForm.get('destinations').controls;let i = index" [formGroupName]="i">
@@ -96,9 +98,12 @@
     <div class="col-md-3">
     </div>
     <div class="form-group">
-      <div class="col-md-3">
+      <div class="col-md-3" *ngIf = "!isSavingData">
         <button type="submit" [disabled]="!itenaryForm.valid" class="btn btn-block btn-success">Save</button>
       </div>
+      <div class="col-md-3" *ngIf = "isSavingData">
+          <button type="submit" disabled = "true" class="btn btn-block btn-success"> <span class="fa fa-spinner fa-pulse"></span> Saving..</button>
+        </div>
       <div class="col-md-3">
         <button type="button" (click)="showItenaryForm(false)" class="btn btn-block btn-warning">Cancel</button>
       </div>

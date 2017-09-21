@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  travelNotificationItineraryUrl:"https://sandbox.api.visa.com/travelnotificationservice/v1/travelnotification/itinerary"
+  travelNotificationItineraryUrl:"http://localhost:57206/api/poc"
 };

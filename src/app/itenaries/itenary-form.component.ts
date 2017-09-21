@@ -1,6 +1,6 @@
 import { COUNTRIES, Country } from '../models/country';
 import { Destination } from '../models/destination';
-import { Itenary } from '../models/itenary';
+import { Itinerary } from '../models/itenary';
 import { SmartDataService } from '../services/smart-data.service';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -15,7 +15,7 @@ import { Account } from '../models/account';
 export class ItenaryFormComponent implements OnInit {
 
     @Output() eventShowItenaryForm: EventEmitter<boolean> = new EventEmitter();
-    @Input() itinenary: Itenary;
+    @Input() itinenary: Itinerary;
 
     itenaryForm: FormGroup;
 
@@ -23,7 +23,7 @@ export class ItenaryFormComponent implements OnInit {
     private countries: Country[] = [];
     private accountNumbers: Account[] = [];
     private inEditMode: boolean;
-    private selectedCardNumbers: string[] = [];
+    private isSavingData: boolean = false;
 
 
     constructor(private smartDataService: SmartDataService) {
@@ -39,9 +39,6 @@ export class ItenaryFormComponent implements OnInit {
         }
         else {
             this.inEditMode = true;
-            for (let card of this.itinenary.primaryAccountNumbers) {
-                this.selectedCardNumbers.push(card.cardAccountNumber);
-            }
         }
         this.onInitForm()
     }
@@ -53,12 +50,13 @@ export class ItenaryFormComponent implements OnInit {
         let travelItineraryId = null;
         let departureDate = null;
         let returnDate = null;
-        let selectedCardNumbers = this.selectedCardNumbers;
+        let selectedCardNumber = '';
 
         if (this.inEditMode) {
             travelItineraryId = this.itinenary.travelItineraryId;
             departureDate = this.itinenary.departureDate;
             returnDate = this.itinenary.returnDate;
+            selectedCardNumber = this.itinenary.primaryAccountNumbers[0].cardAccountNumber;
 
             if (this.itinenary.destinations.length > 0) {
                 for (let destination of this.itinenary.destinations) {
@@ -78,17 +76,24 @@ export class ItenaryFormComponent implements OnInit {
             'departureDate': new FormControl(departureDate, [Validators.required]),
             'returnDate': new FormControl(returnDate, [Validators.required]),
             'destinations': destinations,
-            'selectedCardNumbers': new FormControl(selectedCardNumbers, [Validators.required])
+            'selectedCardNumber': new FormControl(this.getCompleteCardNumber(selectedCardNumber), [Validators.required])
         });
 
     }
 
+    private getCompleteCardNumber(lastFourCardNumber: string): string {
+        for (let account of this.smartDataService.user.accountNumbers) {
+            if (account.cardAccountNumber.slice(12, 18) === lastFourCardNumber.slice(12, 18)) {
+                return account.cardAccountNumber;
+            }
+
+        }
+        return lastFourCardNumber;
+    }
 
     showItenaryForm(shouldShow: boolean): void {
         this.eventShowItenaryForm.emit(shouldShow);
     }
-
-
 
     onAddDestination() {
         (<FormArray>this.itenaryForm.get('destinations')).push(new FormGroup({
@@ -101,15 +106,31 @@ export class ItenaryFormComponent implements OnInit {
         (<FormArray>this.itenaryForm.get('destinations')).removeAt(i);
     }
 
-
     onSubmit() {
+
+        this.isSavingData = true;
+
+        let formData = this.itenaryForm.value;
+        formData.selectedCardNumbers = [];
+        formData.selectedCardNumbers.push(this.itenaryForm.value.selectedCardNumber)
+
         if (!this.inEditMode) {
-            this.smartDataService.addUserItenary(this.itenaryForm.value);
+            this.smartDataService.addItinerary(formData).subscribe((data: any) => {
+                this.smartDataService.loadItineraries();
+                this.eventShowItenaryForm.emit(false);
+            }, (error) => {
+                console.log(error);
+            }, () => { this.isSavingData = false; });
         }
         else {
-            this.smartDataService.updateUserItenary(this.itenaryForm.value);
+            this.smartDataService.updateItinerary(formData).subscribe((data: any) => {
+                this.smartDataService.loadItineraries();
+                this.eventShowItenaryForm.emit(false);
+            }, (error) => {
+                console.log(error);
+            }, () => { this.isSavingData = false; });
         }
-        this.eventShowItenaryForm.emit(false);
+
     }
 
 

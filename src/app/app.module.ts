@@ -1,3 +1,4 @@
+import { DataMapper } from './mapper/dataMapper';
 import { SmartDataService } from './services/smart-data.service';
 import { SmartApiService } from './services/smart-api.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -34,6 +35,7 @@ import { AccountComponent } from './manageAccounts/account/account.component'
   ],
   providers: [
     SmartApiService,
+    DataMapper,
     SmartDataService]
   ,
   bootstrap: [AppComponent]

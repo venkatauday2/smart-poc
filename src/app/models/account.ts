@@ -3,11 +3,7 @@ export class Account {
     isEnabled: boolean;
     isSelected: boolean;
 
-    constructor(accountNumber: string, isEnabled: boolean, isSelected: boolean) {
-
+    constructor(accountNumber: string) {
         this.cardAccountNumber = accountNumber;
-        this.isEnabled = isEnabled;
-        this.isSelected = isSelected;
-
     }
 }

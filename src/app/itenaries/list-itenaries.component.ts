@@ -1,4 +1,5 @@
-import { Itenary } from '../models/itenary';
+import { UIFilter } from '../models/filter';
+import { Itinerary } from '../models/itenary';
 import { SmartDataService } from '../services/smart-data.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,19 +11,21 @@ import { Component, OnInit } from '@angular/core';
 export class ListItenariesComponent implements OnInit {
 
   public shouldShowItenaryForm: boolean = false;
-  public selectedItinenary: Itenary;
+  public selectedItinenary: Itinerary;
+  public itineraries: Itinerary[];
+
 
   constructor(private smartDataService: SmartDataService) {
-
   }
 
   ngOnInit() {
     this.smartDataService.loadUser();
+    this.smartDataService.loadItineraries();
   }
 
 
   public addItinenary() {
-    this.selectedItinenary = new Itenary();
+    this.selectedItinenary = new Itinerary();
     this.shouldShowItenaryForm = true;
   }
 
@@ -36,7 +39,11 @@ export class ListItenariesComponent implements OnInit {
   }
 
   public onDelete(itinerary: any) {
-    this.smartDataService.deleteItinenary(itinerary);
+    this.smartDataService.deleteItinenary(itinerary).subscribe((data: any) => {
+      this.smartDataService.loadItineraries();
+    }, (error) => {
+      console.log(error);
+    }, () => { });;
 
   }
 
