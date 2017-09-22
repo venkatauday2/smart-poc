@@ -13,7 +13,8 @@ import { AppComponent } from './app.component';
 import { ListItenariesComponent } from './itenaries/list-itenaries.component'
 import { ItenaryFormComponent } from './itenaries/itenary-form.component';
 import { ListAccountsComponent } from './manageAccounts/list-accounts/list-accounts.component';
-import { AccountComponent } from './manageAccounts/account/account.component'
+import { AccountComponent } from './manageAccounts/account/account.component';
+import { ManageCardsComponent } from './manage-cards/manage-cards.component'
 //import { DropdownMultiselectModule } from 'ng2-dropdown-multiselect';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AccountComponent } from './manageAccounts/account/account.component'
     ListItenariesComponent,
     ItenaryFormComponent,
     ListAccountsComponent,
-    AccountComponent
+    AccountComponent,
+    ManageCardsComponent
 
   ],
   imports: [

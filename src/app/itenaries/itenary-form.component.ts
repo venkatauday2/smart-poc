@@ -30,7 +30,7 @@ export class ItenaryFormComponent implements OnInit {
     constructor(private smartDataService: SmartDataService) {
         this.countries = COUNTRIES;
         this.states = STATES;
-        this.accountNumbers = this.smartDataService.user.accountNumbers;
+        this.accountNumbers = this.smartDataService.user.accounts;
     }
 
     ngOnInit() {
@@ -83,7 +83,7 @@ export class ItenaryFormComponent implements OnInit {
     }
 
     private getCompleteCardNumber(lastFourCardNumber: string): string {
-        for (let account of this.smartDataService.user.accountNumbers) {
+        for (let account of this.smartDataService.user.accounts) {
             if (account.cardAccountNumber.slice(12, 18) === lastFourCardNumber.slice(12, 18)) {
                 return account.cardAccountNumber;
             }

@@ -4,6 +4,12 @@
   <div class="row">
     <div class="col-md-12">
       <tabset [justified]="true">
+          <tab>
+              <ng-template tabHeading>
+                <h5><span class="fa fa-credit-card"></span> Manage Accounts</h5>
+              </ng-template>
+              <app-manage-cards *ngIf="!smartDataService.isLoadingUserInfo && smartDataService.user"></app-manage-cards>
+            </tab>
         <tab>
           <ng-template tabHeading>
             <h5><span class="fa fa-plane"></span> Manage Itineraries</h5>

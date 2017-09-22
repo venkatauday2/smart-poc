@@ -16,9 +16,9 @@
                 </div>
                 <div class="col-md-4">
                   <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-md btn-default" [disabled]="shouldShowItenaryForm" (click)="addItinenary()" style="margin-top:10px"> <span class="fa fa-plus"></span> Add Itinerary</button>
-                      <button type="button" class="btn btn-md btn-default" (click)="smartDataService.loadItineraries()" style="margin-top:10px"> <span class="fa fa-refresh"></span> Refresh</button>
-                  </div>          
+                    <button type="button" class="btn btn-md btn-default" [disabled]="shouldShowItenaryForm" (click)="addItinenary()" style="margin-top:10px"> <span class="fa fa-plus"></span> Add Itinerary</button>
+                    <button type="button" class="btn btn-md btn-default" (click)="smartDataService.loadItineraries()" style="margin-top:10px"> <span class="fa fa-refresh"></span> Refresh</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -40,31 +40,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let itenary of smartDataService.itineraries">
-                      <td>{{itenary.departureDate}}</td>
-                      <td>{{itenary.returnDate}}</td>
-                      <td colspan="3"><span *ngFor=" let item of itenary.primaryAccountNumbers, let i=index">
-                          {{item.cardAccountNumber}}{{i === itenary.primaryAccountNumbers.length - 1 ? '' : ', '}}
-                       </span></td>
-                      <td>
-                        <span *ngFor=" let destination of itenary.destinations, let j=index">
-                            {{destination.state}}, {{"United States"}}{{j === itenary.destinations.length - 1 ? '' : '&nbsp;&nbsp;'}}
-                        </span>
-                      </td>
-                      <td>
-                        <div>
-                          <button class="btn btn-sm btn-primary" (click)="editItinenary(itenary)"><span class="fa fa-pencil"></span></button>
-                          <button class="btn btn-sm btn-danger" (click)="onDelete(itenary)"><span class="fa fa-trash"></span></button>
-                        </div>
-                      </td>
-                    </tr>
+                    <ng-container *ngFor="let itenary of smartDataService.itineraries">
+                      <tr>
+                        <td>{{itenary.departureDate}}</td>
+                        <td>{{itenary.returnDate}}</td>
+                        <td colspan="3"><span *ngFor=" let item of itenary.primaryAccountNumbers, let i=index">
+                                {{item.cardAccountNumber}}{{i === itenary.primaryAccountNumbers.length - 1 ? '' : ', '}}
+                             </span></td>
+                        <td>
+                          <span *ngFor=" let destination of itenary.destinations, let j=index">
+                                  {{destination.state}}, {{"United States"}}{{j === itenary.destinations.length - 1 ? '' : '&nbsp;&nbsp;'}}
+                              </span>
+                        </td>
+                        <td>
+                          <div>
+                            <button class="btn btn-sm btn-primary" (click)="editItinenary(itenary)"><span class="fa fa-pencil"></span></button>
+                            <button class="btn btn-sm btn-danger" (click)="onDelete(itenary)"><span class="fa fa-trash"></span></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="7"><p>Hello Brother!!</p></td>
+                      </tr>
+                    </ng-container>
                   </tbody>
                 </table>
               </div>
             </div>
             <div class="row" *ngIf="smartDataService.isLoadingItineraries">
               <div class="col-md-12">
-                <h4><span class="fa fa-spinner fa-pulse"></span>loading itineraries....</h4>
+                <h4><span class="fa fa-spinner fa-pulse"></span> loading itineraries....</h4>
               </div>
             </div>
             <div class="row" *ngIf="smartDataService.hasErrorOccuredLoadingItineraries">

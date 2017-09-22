@@ -13,7 +13,7 @@ export class ListAccountsComponent implements OnInit {
 
   constructor(private smartDataService: SmartDataService) {
 
-    this.accounts = this.smartDataService.user.accountNumbers;
+    this.accounts = this.smartDataService.user.accounts;
 
   }
 

@@ -51,7 +51,7 @@ export class SmartDataService {
     let observables: Observable<Itinerary[]>[] = [];
     data.partnerBid = this.user.partnerBid;
 
-    for (let account of this.user.accountNumbers) {
+    for (let account of this.user.accounts) {
       observables.push(this.smartApiService.getItineraries(this.dataMapper.buildGetItineraryApiModel(data, account.cardAccountNumber)));
     }
     return Observable.forkJoin(observables).map((results) => {
