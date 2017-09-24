@@ -59,6 +59,7 @@ export class ShowItinerariesComponent implements OnInit {
 
   onItineraryFormSaveOrCancel($event): void {
     this.inAddMode = $event;
+    this.reloadItineraries();
   }
 
 }
