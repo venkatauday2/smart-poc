@@ -37,9 +37,9 @@ export class ShowItinerariesComponent implements OnInit {
     this.filter.primaryAccountNumber = this.account.cardAccountNumber;
 
     this.isLoadingItineraries = true;
+    this.hasErrorOccuredLoadingItineraries = false;
 
     this.smartDataService.getItinerariesByAccountNumber(this.filter).finally(() => {
-      this.hasErrorOccuredLoadingItineraries = false;
       this.isLoadingItineraries = false;
     }).subscribe((data) => {
       this.itineraries = data as Itinerary[]
