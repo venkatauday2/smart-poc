@@ -27,7 +27,7 @@ export class SmartApiService {
     let headers = new Headers();
     let options = new RequestOptions({ headers: headers });
     headers.append('Content-Type', 'application/json');
-    return this.http.post(this.itineraryApiUrl + "/GetItenaries", JSON.stringify(data), options).map((response: Response) => {
+    return this.http.get(this.itineraryApiUrl + `/Itinerary?primaryAccountNumber=${data.retrieveTravelItinerary.primaryAccountNumber.cardAccountNumber}`, options).map((response: Response) => {
       let apiData = response.json();
       return this.dataMapper.mapApiDataToItineraryModel(apiData.retrieveTravelItineraryResponse.travelItineraries);
     });
@@ -49,7 +49,7 @@ export class SmartApiService {
 
   deleteItinerary(data: any): Observable<any> {
     let headers = new Headers();
-    let options = new RequestOptions({ headers: headers, body: JSON.stringify(data)});
+    let options = new RequestOptions({ headers: headers, body: JSON.stringify(data) });
     headers.append('Content-Type', 'application/json');
     return this.http.delete(this.itineraryApiUrl, options).map((response: Response) => response.json());
   }

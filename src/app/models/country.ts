@@ -9,4 +9,6 @@ export class Country {
 }
 
 
-export const COUNTRIES: Country[] = [new Country("840", "United States")]
+export const COUNTRIES: Country[] = [new Country("840", "United States")
+                                    ,new Country("841","Canada")
+                                    ,new Country("842","India")]
