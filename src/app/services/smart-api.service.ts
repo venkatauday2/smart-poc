@@ -27,7 +27,7 @@ export class SmartApiService {
     let headers = new Headers();
     let options = new RequestOptions({ headers: headers });
     headers.append('Content-Type', 'application/json');
-    return this.http.get(this.itineraryApiUrl + `/Itinerary?primaryAccountNumber=${data.retrieveTravelItinerary.primaryAccountNumber.cardAccountNumber}`, options).map((response: Response) => {
+    return this.http.get(this.itineraryApiUrl + `?primaryAccountNumber=${data.retrieveTravelItinerary.primaryAccountNumber.cardAccountNumber}`, options).map((response: Response) => {
       let apiData = response.json();
       return this.dataMapper.mapApiDataToItineraryModel(apiData.retrieveTravelItineraryResponse.travelItineraries);
     });

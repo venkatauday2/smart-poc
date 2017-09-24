@@ -59,35 +59,33 @@ export class DataMapper {
         return primaryAccountNumbers;
     }
 
-    
+
     ////////////////////////////////////////////////////Convert Application Model to Api Model//////////////////////////////////////////////////////////////////////////
 
 
     public buildAddItineraryApiModel(itinenary: any, user: any): AddItenaryApiModel {
         let addItineraryApiModel = new AddItenaryApiModel();
-        addItineraryApiModel.userId = user.userId
-        addItineraryApiModel.partnerBid = user.partnerBid
-        addItineraryApiModel.addTravelItinerary = this.buildItineraryApiModel(itinenary)
+        addItineraryApiModel.addTravelItinerary = this.buildItineraryApiModel(itinenary, user)
         return addItineraryApiModel;
     }
 
 
     public buildUpdateItineraryApiModel(itinenary: any, user: any): UpdateItenaryApiModel {
         let updateItineraryApiModel = new UpdateItenaryApiModel();
-        updateItineraryApiModel.userId = user.userId
-        updateItineraryApiModel.partnerBid = user.partnerBid
-        updateItineraryApiModel.updateTravelItinerary = this.buildItineraryApiModel(itinenary);
+        updateItineraryApiModel.updateTravelItinerary = this.buildItineraryApiModel(itinenary, user);
         updateItineraryApiModel.travelItineraryId = itinenary.travelItineraryId;
         return updateItineraryApiModel;
     }
 
 
-    public buildItineraryApiModel(itinerary: any): ItinenaryApiModel {
+    public buildItineraryApiModel(itinerary: any, user: any): ItinenaryApiModel {
         let itinenaryApiModel = new ItinenaryApiModel();
         itinenaryApiModel.departureDate = itinerary.departureDate;
         itinenaryApiModel.returnDate = itinerary.returnDate;
         itinenaryApiModel.primaryAccountNumbers = [];
         itinenaryApiModel.destinations = [];
+        itinenaryApiModel.partnerBid = user.partnerBid;
+        itinenaryApiModel.userId = user.userId;
 
         // add accounts
         for (let cardNumber of itinerary.selectedCardNumbers) {

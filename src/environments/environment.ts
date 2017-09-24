@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  travelNotificationItineraryUrl:"http://localhost:57206/api/poc"
+  travelNotificationItineraryUrl:"http://localhost:57206/api/Itinerary"
 };
