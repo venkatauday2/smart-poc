@@ -1,0 +1,71 @@
+<div class="panel panel-default widget">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-9">
+        <legend><span class="fa fa-plane"></span> {{inEditMode?'Edit':''}} Itinerary</legend>
+      </div>
+      <div *ngIf="!inEditMode" class="col-md-3 text-center">
+        <button class="btn btn-sm btn-primary" (click)="onEditItinenary()"><span class="fa fa-pencil"></span></button>
+        <button class="btn btn-sm btn-danger" (click)="onDeleteItinerary()"><span class="fa fa-trash"></span></button>
+      </div>
+    </div>
+    <div class="row" *ngIf="!inEditMode">
+      <!--First half-->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <label><span class="fa fa-book"></span> Details</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <td><b>Itinerary Id</b></td>
+                  <td>{{itinerary.travelItineraryId}}</td>
+                </tr>
+                <tr>
+                  <td><b>Departure Date</b></td>
+                  <td>{{itinerary.departureDate}}</td>
+                </tr>
+                <tr>
+                  <td><b>Return Date</b></td>
+                  <td>{{itinerary.returnDate}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--End-First half-->
+      <!--second-half-->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <label><span class="fa fa-globe"></span> Destinations</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-striped">
+              <tbody>
+                <tr *ngFor="let destination of itinerary.destinations">
+                  <td>{{destination.state}}, {{destination.country}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--End-second-half-->
+    </div>
+    <!--Form-Start-->
+    <div class="row" *ngIf="inEditMode">
+      <div class="col-md-12">
+        <app-add-update-itinerary-form [itinerary]="itinerary" (eventShowItineraryForm)="onItineraryFormSaveOrCancel($event)"></app-add-update-itinerary-form>
+      </div>
+    </div>
+    <!--Form-End-->
+  </div>
+</div>

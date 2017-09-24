@@ -12,9 +12,9 @@ export class User {
 //Mock some accounts
 let account1 = new Account("4645191800301234");
 account1.cardName = "Schwab Travel Rewards Debit Card";
-account1.imageUrl = "../../src/assets/images/card1.png";
+account1.imageUrl = "../assets/images/card1.png";
 let account2 = new Account("4645191800301235")
-account2.imageUrl = "../../src/assets/images/card2.png";
+account2.imageUrl = "../assets/images/card2.png";
 account2.cardName ="Schwab Cash Rewards Debit Card";
 
 //Mock some user

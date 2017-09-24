@@ -1,0 +1,24 @@
+  <div class="row">
+          <div class="col-md-6">
+            <label>Itinerary Id</label>
+          </div>
+          <div class="col-md-6 text-left">
+            G4J89fJ79
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Departure Date</label>
+          </div>
+          <div class="col-md-6 text-left">
+            2017-09-01
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Return Date</label>
+          </div>
+          <div class="col-md-6 text-left">
+            2017-09-30
+          </div>
+        </div>

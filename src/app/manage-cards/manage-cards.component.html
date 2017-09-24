@@ -1,12 +1,12 @@
 <br/>
 <br/>
-
 <div class="row">
-  <div class="col-md-offset-2 col-md-8">
-    <div class="panel panel-default">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3><span class="fa fa-credit-card"></span> My Cards</h3>
+      </div>
       <div class="panel-body">
-        <legend><span class="fa fa-credit-card"></span> My Cards</legend>
-        <br/>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -18,15 +18,29 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor= "let account of smartDataService.user.accounts">
-              <tr>
-                <td><img alt="{{account.cardName}}"  [src]="account.imageUrl"></td>
+            <ng-container *ngFor="let account of smartDataService.user.accounts">
+              <tr [ngClass]="{'grey-out':!account.isActive}">
+                <td><img alt="{{account.cardName}}" [src]="account.imageUrl"></td>
+                <td>{{account.cardName}}</td>
+                <td>{{account.cardAccountNumber}}</td>
+                <td><button class="btn btn-md" (click)="account.showItineraries=!account.showItineraries" [disabled]="!account.isActive">
+                      <span *ngIf="account.showItineraries" class="glyphicon glyphicon-th-large"></span> 
+                      <span *ngIf="!account.showItineraries" class="glyphicon glyphicon-th"></span> View Itineraries</button></td>
+                <td>
+                  <label class="switch">
+                    <input type="checkbox" [checked]="account.isActive" [(ngModel)]="account.isActive">
+                    <span class="slider round"></span>
+                  </label>
+                </td>
+              </tr>
+              <tr *ngIf="account.showItineraries && account.isActive">
+                <td colspan="5">
+                  <app-show-itineraries [account]="account"></app-show-itineraries>
+                </td>
               </tr>
             </ng-container>
-
           </tbody>
         </table>
-
       </div>
     </div>
   </div>

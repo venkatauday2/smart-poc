@@ -1,0 +1,36 @@
+<div class="well well-lg">
+  <div class="row">
+    <div class="col-md-10 text-left">
+      <legend><span class="fa fa-tags"></span> Itineraries</legend>
+    </div>
+    <div class="col-md-2 text-center">
+      <button type="button" class="btn btn-sm btn-default" (click)="onAddItinerary()" style="margin-top:12px;"><span class="fa fa-plus"></span> Add Itinerary</button>
+    </div>
+  </div>
+  <br/>
+  <div class="row" *ngIf="inAddMode">
+    <div class="col-md-offset-3 col-md-6">
+      <div class="panel panel-default widget">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <legend><span class="fa fa-plane"></span> New Itinerary</legend>
+            </div>
+          </div>
+          <div clas="row">
+            <div class="col-md-12">
+              <app-add-update-itinerary-form [itinerary]="newItinerary" (eventShowItineraryForm)="onItineraryFormSaveOrCancel($event)"></app-add-update-itinerary-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngFor="let itinerary of itineraries;let j = index">
+    <div [ngClass]="{'row':j%2 ==1}">
+      <div class="col-md-6">
+        <app-itenary-widget [itinerary]="itinerary"></app-itenary-widget>
+      </div>
+    </div>
+  </ng-container>
+</div>

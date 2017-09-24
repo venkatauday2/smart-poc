@@ -46,13 +46,19 @@ export class SmartDataService {
   }
 
 
+  public getItinerariesByAccountNumber(data: any): Observable<Itinerary[]> {
+    return this.smartApiService.getItineraries(this.dataMapper.buildGetItineraryApiModel(data));
+  }
+
+
   public getItineraries(data: any): Observable<Itinerary[]> {
 
     let observables: Observable<Itinerary[]>[] = [];
     data.partnerBid = this.user.partnerBid;
 
     for (let account of this.user.accounts) {
-      observables.push(this.smartApiService.getItineraries(this.dataMapper.buildGetItineraryApiModel(data, account.cardAccountNumber)));
+      data.primaryAccountNumber = account.cardAccountNumber;
+      observables.push(this.smartApiService.getItineraries(this.dataMapper.buildGetItineraryApiModel(data)));
     }
     return Observable.forkJoin(observables).map((results) => {
       let itineraries: Itinerary[] = []
@@ -92,6 +98,7 @@ export class SmartDataService {
   public deleteItinenary(deleteItinenary: any) {
     return this.smartApiService.deleteItinerary(this.dataMapper.buildDeleteItineraryApiRequest(deleteItinenary));
   }
+
 
 
 

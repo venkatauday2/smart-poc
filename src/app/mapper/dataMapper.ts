@@ -106,12 +106,12 @@ export class DataMapper {
     }
 
 
-    public buildGetItineraryApiModel(data: any, accountNumber: string): GetItineraryApiModel {
+    public buildGetItineraryApiModel(data: any): GetItineraryApiModel {
 
         let retrieveTravelItinerary = new GetItineraryRequest();
         retrieveTravelItinerary.fromDate = data.fromDate ? data.fromDate : "2017-09-01"
         retrieveTravelItinerary.toDate = data.toDate;
-        retrieveTravelItinerary.primaryAccountNumber = new Account(accountNumber);
+        retrieveTravelItinerary.primaryAccountNumber = new Account(data.primaryAccountNumber);
         retrieveTravelItinerary.partnerBid = data.partnerBid
         let getItineraryApiModel = new GetItineraryApiModel();
         getItineraryApiModel.retrieveTravelItinerary = retrieveTravelItinerary;

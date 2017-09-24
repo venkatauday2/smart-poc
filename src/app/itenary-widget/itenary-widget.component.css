@@ -1,0 +1,5 @@
+.widget {
+  font-size: 12px;
+  box-shadow: 0 8px 8px rgba(10, 16, 20, .24), 0 0 8px rgba(10, 16, 20, .12);
+  text-decoration: none;
+}

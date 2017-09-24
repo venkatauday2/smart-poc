@@ -1,0 +1,98 @@
+<form [formGroup]="itenaryForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class=" col-md-offset-1 col-md-10">
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="travelItineraryId" formControlName="travelItineraryId">
+      </div>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="selectedCardNumber" formControlName="selectedCardNumber">
+      </div>
+      <fieldset>
+        <legend style="font-size:16px;"><span class="fa fa-calendar"></span> Travel Dates</legend>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group input-group-sm" [ngClass]="{ 'has-success' :itenaryForm.controls['departureDate'].valid,
+                'has-error' : itenaryForm.controls['departureDate'].invalid && itenaryForm.controls['departureDate'].touched }">
+              <input type="text" class="form-control" id="departureDate" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Departure Date"
+                formControlName="departureDate">
+              <span id="departureHelpBlock1" class="help-block" *ngIf="itenaryForm.controls['departureDate'].invalid 
+                       && itenaryForm.controls['departureDate'].touched
+                       && itenaryForm.controls['departureDate'].hasError('required')"> Departure date is required.</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group input-group-sm" [ngClass]="{ 'has-success' :itenaryForm.controls['returnDate'].valid,
+                'has-error' : itenaryForm.controls['returnDate'].invalid && itenaryForm.controls['returnDate'].touched }">
+              <input type="text" class="form-control" id="returnDate" placeholder="Return Date" onfocus="(this.type='date')" onblur="(this.type='text')"
+                formControlName="returnDate">
+              <span id="returnHelpBlock1" class="help-block" *ngIf="itenaryForm.controls['returnDate'].invalid 
+                      && itenaryForm.controls['returnDate'].touched
+                      && itenaryForm.controls['returnDate'].hasError('required')"> Return date is required.</span>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="row">
+          <div class="col-md-8">
+            <legend style="font-size:16px;"><span class="fa fa-globe"></span> Destinations </legend>
+          </div>
+          <div class="col-md-4" style="margin-top:5px;">
+            <button type="button" class="btn btn-xs btn-default" (click)="onAddDestination()" style="color:green"><span class="fa fa-plus"></span> Add Destination </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" formArrayName="destinations">
+            <div class="row" *ngFor="let destinationCtrl of itenaryForm.get('destinations').controls;let i = index" [formGroupName]="i">
+              <div class="col-md-5 form-group input-group-sm" [ngClass]="{ 'has-success': destinationCtrl.get('state').valid,
+                                                              'has-error'  : destinationCtrl.get('state').invalid && destinationCtrl.get('state').touched }">
+                <select type="text" class="form-control" id="state" placeholder="State" formControlName="state">
+                          <option value="">Choose a state</option>
+                          <option *ngFor="let state of states"  [ngValue]="state.code">{{state.description}}</option>
+                </select>
+                <span id="stateBlock1" class="help-block" *ngIf="destinationCtrl.get('state').invalid 
+                                                    &&  destinationCtrl.get('state').touched
+                                                    &&  destinationCtrl.get('state').hasError('required')"> State is required.</span>
+              </div>
+              
+              <div class="col-md-5 form-group input-group-sm" [ngClass]="{ 'has-success': destinationCtrl.get('country').valid,
+                                                              'has-error'  : destinationCtrl.get('country').invalid && destinationCtrl.get('country').touched }">
+                <select type="text" class="form-control" id="country" placeholder="Country" formControlName="country">
+                        <option value="">Choose a Country</option>
+                        <option *ngFor="let country of countries"  [ngValue]="country.code">{{country.description}}</option>
+                </select>
+                <span id="countryBlock1" class="help-block" *ngIf="destinationCtrl.get('country').invalid 
+                                                  &&  destinationCtrl.get('country').touched
+                                                  &&  destinationCtrl.get('country').hasError('required')"> Country is required.</span>
+              </div>
+              <div class="col-md-2 form-group input-group-sm">
+                <button type="button" (click)="onDeleteDestination(i)" style="margin-left:-10px" class="btn btn-danger btn-sm" id="delDest"><span class="fa fa-trash"></span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="itenaryForm.get('destinations').controls.length == 0">
+          <div class="col-md-12 form-group  has-error">
+            <span id="stateBlock1" class="help-block" *ngIf="itenaryForm.get('destinations').controls.length == 0"> Atleast one destination needed.</span>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group input-group-sm">
+      <div class="col-md-offset-4 col-md-6">
+        <button type="submit" *ngIf="!isSavingData" [disabled]="!itenaryForm.valid" class="btn btn-sm btn-success"><span class="fa fa-floppy-o"></span>&nbsp;&nbsp;Save&nbsp;</button>
+        <button type="submit" *ngIf="isSavingData" disabled="true" class="btn btn-sm btn-success"> <span class="fa fa-spinner fa-pulse"></span> Saving..</button>
+        <button type="button" (click)="showItenaryForm(false)" class="btn btn-sm btn-warning"><span class="fa fa-ban"></span> Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="hasErrorOccured">
+    <div class="col-md-12 text-center" style="color:red">
+      <span class="fa fa-warning"></span> An error has occured.
+    </div>
+  </div>
+</form>

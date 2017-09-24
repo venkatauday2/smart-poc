@@ -8,13 +8,18 @@ import { HttpModule } from '@angular/http';
 import { TabsModule } from 'ngx-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 
+
+
 //import components
 import { AppComponent } from './app.component';
 import { ListItenariesComponent } from './itenaries/list-itenaries.component'
 import { ItenaryFormComponent } from './itenaries/itenary-form.component';
 import { ListAccountsComponent } from './manageAccounts/list-accounts/list-accounts.component';
 import { AccountComponent } from './manageAccounts/account/account.component';
-import { ManageCardsComponent } from './manage-cards/manage-cards.component'
+import { ManageCardsComponent } from './manage-cards/manage-cards.component';
+import { ItenaryWidgetComponent } from './itenary-widget/itenary-widget.component';
+import { ShowItinerariesComponent } from './show-itineraries/show-itineraries.component';
+import { AddUpdateItineraryFormComponent } from './add-update-itinerary-form/add-update-itinerary-form.component'
 //import { DropdownMultiselectModule } from 'ng2-dropdown-multiselect';
 
 @NgModule({
@@ -24,7 +29,10 @@ import { ManageCardsComponent } from './manage-cards/manage-cards.component'
     ItenaryFormComponent,
     ListAccountsComponent,
     AccountComponent,
-    ManageCardsComponent
+    ManageCardsComponent,
+    ItenaryWidgetComponent,
+    ShowItinerariesComponent,
+    AddUpdateItineraryFormComponent
 
   ],
   imports: [
