@@ -16,6 +16,7 @@ export class ShowItinerariesComponent implements OnInit {
 
   private itineraries: Itinerary[] = [];
   private isLoadingItineraries: boolean = false;
+  private hasErrorOccuredLoadingItineraries: boolean = false;
   private filter: UIFilter;
   private newItinerary: Itinerary;
   private inAddMode: boolean = false;
@@ -38,10 +39,12 @@ export class ShowItinerariesComponent implements OnInit {
     this.isLoadingItineraries = true;
 
     this.smartDataService.getItinerariesByAccountNumber(this.filter).finally(() => {
+      this.hasErrorOccuredLoadingItineraries = false;
       this.isLoadingItineraries = false;
     }).subscribe((data) => {
       this.itineraries = data as Itinerary[]
     }, (error) => {
+      this.hasErrorOccuredLoadingItineraries = true;
       console.log(error);
     });
   }
