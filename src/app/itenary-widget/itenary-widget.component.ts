@@ -1,5 +1,6 @@
+import { SmartDataService } from '../services/smart-data.service';
 import { Itinerary } from '../models/itenary';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-itenary-widget',
@@ -9,23 +10,49 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ItenaryWidgetComponent implements OnInit {
 
   @Input() itinerary: Itinerary;
+  @Output() onDeleteOrUpdateItinerary: EventEmitter<boolean> = new EventEmitter();
 
   private inEditMode: boolean = false;
+  private inDeleteMode: boolean = false;
+  private hasErrorOccuredDeleting: boolean = false;
 
-  constructor() { }
+  constructor(private smartDataService: SmartDataService) { }
 
   ngOnInit() {
   }
+
 
   onEditItinenary(): void {
     this.inEditMode = true;
   }
 
-  onDeleteItinerary(): void {
 
+  onDeleteConfirm(): void {
+    this.hasErrorOccuredDeleting = false;
+    this.smartDataService.deleteItinenary(this.itinerary).finally(() => {
+    }).subscribe(() => {
+      this.inDeleteMode = false;
+      this.smartDataService.getItinerariesByAccountNumber(this.itinerary);
+      this.onDeleteOrUpdateItinerary.emit();
+    }, (error) => {
+      console.log(error);
+      this.hasErrorOccuredDeleting = true;
+    });
   }
 
+
+  onDeleteCancel(): void {
+    this.inDeleteMode = false;
+  }
+
+
+  onDeleteItinerary(): void {
+    this.inDeleteMode = true;
+  }
+
+
   onItineraryFormSaveOrCancel(event: any) {
+    this.onDeleteOrUpdateItinerary.emit();
     this.inEditMode = event;
   }
 

@@ -1,3 +1,5 @@
+import { COUNTRIES, Country } from '../models/country';
+import { State, STATES } from '../models/state';
 import { DeleteItineraryRequest } from '../apiModels/deleteItineraryRequest';
 import { DestinationApiModel } from '../apiModels/destinationApiModel';
 import { AccountApiModel } from '../apiModels/accountApiModel';
@@ -45,9 +47,28 @@ export class DataMapper {
     public buildDestinations(destinationsApiModel: any[]): Destination[] {
         let destinations: Destination[] = [];
         for (let destination of destinationsApiModel) {
-            destinations.push(new Destination(destination.state, destination.country))
+            destinations.push(new Destination(this.getStateByCode(destination.state), this.getCountryByCode(destination.country)))
         }
         return destinations;
+    }
+
+    public getStateByCode(stateCode: string): State {
+        for (let state of STATES) {
+            if (state.code === stateCode) {
+                return state;
+            }
+        }
+        return null;
+    }
+
+
+    public getCountryByCode(countryCode: string): Country {
+        for (let country of COUNTRIES) {
+            if (country.code === countryCode) {
+                return country;
+            }
+        }
+        return null;
     }
 
 
@@ -99,7 +120,6 @@ export class DataMapper {
             let destApiModel = new DestinationApiModel(destination.state, destination.country);
             itinenaryApiModel.destinations.push(destApiModel);
         }
-
         return itinenaryApiModel;
     }
 

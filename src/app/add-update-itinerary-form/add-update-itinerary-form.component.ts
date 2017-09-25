@@ -69,8 +69,8 @@ export class AddUpdateItineraryFormComponent implements OnInit {
       if (this.itinerary.destinations.length > 0) {
         for (let destination of this.itinerary.destinations) {
           destinations.push(new FormGroup({
-            'state': new FormControl(destination.state, [Validators.required]),
-            'country': new FormControl(destination.country, [Validators.required])
+            'state': new FormControl(destination.state.code, [Validators.required]),
+            'country': new FormControl(destination.country.code, [Validators.required])
           }));
         }
       }
@@ -119,7 +119,6 @@ export class AddUpdateItineraryFormComponent implements OnInit {
   onSubmit() {
 
     this.isSavingData = true;
-
     let formData = this.itenaryForm.value;
     formData.selectedCardNumbers = [];
     formData.selectedCardNumbers.push(this.itenaryForm.value.selectedCardNumber)
@@ -145,9 +144,7 @@ export class AddUpdateItineraryFormComponent implements OnInit {
         console.log(error);
         this.hasErrorOccured = true;
       });
-
     }
-
   }
 
 

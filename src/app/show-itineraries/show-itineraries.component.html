@@ -9,14 +9,14 @@
   </div>
   <div class="row" *ngIf="isLoadingItineraries">
     <div class="col-md-12">
-       <span class="fa fa-spinner fa-pulse"></span> loading itineraries...
+      <span class="fa fa-spinner fa-pulse"></span> loading itineraries...
     </div>
   </div>
   <div class="row" *ngIf="hasErrorOccuredLoadingItineraries">
-      <div class="col-md-12" style="color:red">
-         <span class="fa fa-exclamation-triangle"></span>  Error occured loading itineraries
-      </div>
+    <div class="col-md-12" style="color:red">
+      <span class="fa fa-exclamation-triangle"></span> Error occured loading itineraries
     </div>
+  </div>
   <br/>
   <div class="row" *ngIf="inAddMode">
     <div class="col-md-offset-3 col-md-6">
@@ -39,7 +39,7 @@
   <ng-container *ngFor="let itinerary of itineraries;let j = index">
     <div [ngClass]="{'row':j%2 ==1}">
       <div class="col-md-6">
-        <app-itenary-widget [itinerary]="itinerary"></app-itenary-widget>
+        <app-itenary-widget [itinerary]="itinerary" (onDeleteOrUpdateItinerary)="reloadItineraries()"></app-itenary-widget>
       </div>
     </div>
   </ng-container>

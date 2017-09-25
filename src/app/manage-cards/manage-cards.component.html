@@ -4,15 +4,16 @@
   <div class="col-md-12">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3><span class="fa fa-credit-card"></span>My Cards</h3>
+        <h3><span class="fa fa-credit-card"></span> My Cards</h3>
       </div>
       <div class="panel-body">
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive">
           <thead>
             <tr>
               <th></th>
               <th>Description</th>
-              <th>Card Number</th>              <th>Manage</th>
+              <th>Card Number</th>
+              <th>Manage</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -26,10 +27,11 @@
                       <span *ngIf="account.showItineraries" class="glyphicon glyphicon-th-large"></span> 
                       <span *ngIf="!account.showItineraries" class="glyphicon glyphicon-th"></span> View Itineraries</button></td>
                 <td>
-                  <label class="switch">   
+                  <label class="switch">
                     <input type="checkbox" [checked]="account.isActive" [(ngModel)]="account.isActive">
                     <span class="slider round"></span>
                   </label>
+                  <div style="margin-top:4px;float:right;margin-left:-4px" align="left" [ngStyle]="{'color':!account.isActive?'red':'green'}"><b>{{account.isActive?"On":"Off"}}</b></div>
                 </td>
               </tr>
               <tr *ngIf="account.showItineraries && account.isActive">

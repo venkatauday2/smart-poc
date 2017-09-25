@@ -1,12 +1,11 @@
+import { Country } from './country';
 import { State } from './state';
 export class Destination {
-    state: string;
-    country: string;
+    state: State;
+    country: Country;
 
-    constructor(state: string, country: string) {
+    constructor(state: State, country: Country) {
         this.state = state;
         this.country = country;
-
     }
-
 }
