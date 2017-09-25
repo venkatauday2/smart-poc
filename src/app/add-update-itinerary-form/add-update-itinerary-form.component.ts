@@ -192,13 +192,13 @@ export class AddUpdateItineraryFormComponent implements OnInit {
     jQuery(document).ready(function () {
       jQuery(".typeahead").typeahead();
 
-      jQuery('#state').typeahead({
+      jQuery("input[id^='state']").typeahead({
         source: states,
         autoSelect: true,
         minLength: 1
       });
 
-      jQuery('#country').typeahead({
+      jQuery("input[id^='country']").typeahead({
         source: countries,
         autoSelect: true,
         minLength: 1
