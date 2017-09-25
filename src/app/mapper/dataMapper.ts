@@ -80,6 +80,24 @@ export class DataMapper {
         return primaryAccountNumbers;
     }
 
+    public getCountryByName(countryName: string): Country {
+        for (let country of COUNTRIES) {
+            if (country.description.toLowerCase() === countryName.toLowerCase()) {
+                return country;
+            }
+        }
+        return null;
+    }
+
+
+    public getStateByName(stateName: string): State {
+        for (let state of STATES) {
+            if (state.description.toLowerCase() === stateName.toLowerCase()) {
+                return state;
+            }
+        }
+        return null;
+    }
 
     ////////////////////////////////////////////////////Convert Application Model to Api Model//////////////////////////////////////////////////////////////////////////
 
@@ -117,7 +135,7 @@ export class DataMapper {
 
         // add destinations
         for (let destination of itinerary.destinations) {
-            let destApiModel = new DestinationApiModel(destination.state, destination.country);
+            let destApiModel = new DestinationApiModel(this.getStateByName(destination.state).code, this.getCountryByName(destination.country).code);
             itinenaryApiModel.destinations.push(destApiModel);
         }
         return itinenaryApiModel;

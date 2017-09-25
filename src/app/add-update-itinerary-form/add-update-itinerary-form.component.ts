@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { State, STATES } from '../models/state'
 import { Account } from '../models/account';
+declare var jQuery: any;
 
 @Component({
   selector: 'app-add-update-itinerary-form',
@@ -26,6 +27,8 @@ export class AddUpdateItineraryFormComponent implements OnInit {
   private inEditMode: boolean;
   private isSavingData: boolean = false;
   private hasErrorOccured: boolean = false;
+  private $: any;
+
 
   constructor(private smartDataService: SmartDataService) {
     this.countries = COUNTRIES;
@@ -42,15 +45,14 @@ export class AddUpdateItineraryFormComponent implements OnInit {
       this.inEditMode = true;
     }
     this.onInitForm()
+
   }
 
+  ngAfterViewInit() {
+    this.initializeTypeAhead();
 
-  search = (text$: Observable<string>) => {
-    return text$
-      .debounceTime(200)
-      .map(term => term === '' ? []
-        : this.states.filter(v => v.description.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)).map;
   }
+
 
 
   onInitForm() {
@@ -69,8 +71,8 @@ export class AddUpdateItineraryFormComponent implements OnInit {
       if (this.itinerary.destinations.length > 0) {
         for (let destination of this.itinerary.destinations) {
           destinations.push(new FormGroup({
-            'state': new FormControl(destination.state.code, [Validators.required]),
-            'country': new FormControl(destination.country.code, [Validators.required])
+            'state': new FormControl(destination.state.description, [Validators.required]),
+            'country': new FormControl(destination.country.description, [Validators.required])
           }));
         }
       }
@@ -108,6 +110,7 @@ export class AddUpdateItineraryFormComponent implements OnInit {
       'state': new FormControl('', [Validators.required]),
       'country': new FormControl('', [Validators.required])
     }));
+    this.initializeTypeAhead();
   }
 
 
@@ -145,6 +148,65 @@ export class AddUpdateItineraryFormComponent implements OnInit {
         this.hasErrorOccured = true;
       });
     }
+  }
+
+
+
+
+  private initializeTypeAhead(): void {
+    var countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda",
+      "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
+      "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil",
+      "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia",
+      "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo",
+      "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus",
+      "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
+      "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands",
+      "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia",
+      "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea",
+      "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran",
+      "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya",
+      "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
+      "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania",
+      "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia",
+      "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway",
+      "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+      "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino",
+      "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
+      "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan",
+      "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este",
+      "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine",
+      "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen",
+      "Zambia", "Zimbabwe"];
+
+
+    let states: string[] = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
+      'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
+      'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
+      'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+      'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
+      'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
+      'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+    jQuery(document).ready(function () {
+      jQuery(".typeahead").typeahead();
+
+      jQuery('#state').typeahead({
+        source: states,
+        autoSelect: true,
+        minLength: 1
+      });
+
+      jQuery('#country').typeahead({
+        source: countries,
+        autoSelect: true,
+        minLength: 1
+      });
+
+
+    });
+
   }
 
 
