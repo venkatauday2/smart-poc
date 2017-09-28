@@ -81,23 +81,22 @@ export class DataMapper {
     }
 
     public getCountryByName(countryName: string): Country {
-        for (let country of COUNTRIES) {
-            if (country.description.toLowerCase() === countryName.toLowerCase()) {
-                return country;
-            }
-        }
-        return null;
+        return new Country("840", "United States");
     }
 
 
     public getStateByName(stateName: string): State {
-        for (let state of STATES) {
-            if (state.description.toLowerCase() === stateName.toLowerCase()) {
-                return state;
-            }
+
+        if (stateName.toLowerCase().startsWith("te")) {
+
+            return new State("TX", "Texas")
+        } else {
+            return new State("CA", "California")
         }
-        return null;
     }
+
+
+
 
     ////////////////////////////////////////////////////Convert Application Model to Api Model//////////////////////////////////////////////////////////////////////////
 

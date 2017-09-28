@@ -31,7 +31,7 @@
                     <input type="checkbox" [checked]="account.isActive" [(ngModel)]="account.isActive">
                     <span class="slider round"></span>
                   </label>
-                  <div style="margin-top:4px;float:right;margin-left:-4px" align="left" [ngStyle]="{'color':!account.isActive?'red':'green'}"><b>{{account.isActive?"On":"Off"}}</b></div>
+                  <div style="margin-top:4px;float:right" align="left" [ngStyle]="{'color':!account.isActive?'red':'green'}"><b>{{account.isActive?"&nbsp;&nbsp;Active":"Inactive"}}</b></div>
                 </td>
               </tr>
               <tr *ngIf="account.showItineraries && account.isActive">

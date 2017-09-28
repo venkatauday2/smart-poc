@@ -36,9 +36,9 @@
       </div>
     </div>
   </div>
-  <ng-container *ngFor="let itinerary of itineraries;let j = index">
-    <div [ngClass]="{'row':j%2 ==1}">
-      <div class="col-md-6">
+  <ng-container>
+    <div class="row">
+      <div class="col-md-6" *ngFor="let itinerary of itineraries">
         <app-itenary-widget [itinerary]="itinerary" (onDeleteOrUpdateItinerary)="reloadItineraries()"></app-itenary-widget>
       </div>
     </div>
